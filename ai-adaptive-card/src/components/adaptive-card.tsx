@@ -136,6 +136,8 @@ function renderNode(node: Node): ReactNode {
       return renderChart(node);
     case 'resizableLayout':
       return renderResizableLayout(node);
+    case 'card':
+      return <AdaptiveCard card={node} />;
     default:
       return null;
   }
