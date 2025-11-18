@@ -26,7 +26,8 @@ card:
 - kind: "card"
 - children: array of nodes
   - Each child kind is one of:
-    "title", "subtitle", "text", "bullets", "table", "chart", "resizableLayout"
+    "title", "subtitle", "text", "bullets", "table", "chart", "resizableLayout", "card"
+  - Nested "card" nodes are allowed and should be used for logical sub-sections inside the main card, not for layout or styling tricks.
 
 title:
 - kind: "title"
@@ -69,13 +70,14 @@ panel (object inside resizableLayout.panels):
 - minSize: optional number (relative size)
 - children: array of nodes
   - Each child kind is one of:
-    "title", "subtitle", "text", "bullets", "table", "chart"
-  - Panels MUST NOT contain another "resizableLayout".
+    "title", "subtitle", "text", "bullets", "table", "chart", "card"
+  - Panels MUST NOT contain "resizableLayout".
 
 Layout rules:
 - "resizableLayout" is the only layout node.
-- Panels cannot contain another "resizableLayout".
+- Panels cannot contain "resizableLayout".
 - A single card may contain multiple "resizableLayout" nodes among its children.
+- Nested "card" nodes are allowed as children of a "card" (including nested cards), including inside resizableLayout.panels.
 
 General rules:
 - NEVER include any HTML tags (no <p>, <div>, <b>, etc.).
@@ -89,6 +91,19 @@ EXAMPLE_CARD = {
     "kind": "card",
     "children": [
         {"kind": "title", "text": "Website traffic overview"},
+        {
+            "kind": "card",
+            "children": [
+                {
+                    "kind": "subtitle",
+                    "text": "High-level summary",
+                },
+                {
+                    "kind": "text",
+                    "text": "Traffic is growing steadily week over week with healthier conversion rates.",
+                },
+            ],
+        },
         {
             "kind": "resizableLayout",
             "direction": "horizontal",

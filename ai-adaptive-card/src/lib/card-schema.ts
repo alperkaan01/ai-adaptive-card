@@ -68,10 +68,16 @@ const NonLayoutNodeSchema = z.union([
   ChartNodeSchema,
 ]);
 
+// Panel children may include non-layout nodes plus nested cards,
+// but never resizableLayout.
+const PanelChildSchema: z.ZodTypeAny = z.lazy(() =>
+  z.union([NonLayoutNodeSchema, CardNodeSchema]),
+);
+
 const PanelSchema = z.object({
   defaultSize: z.number().optional().nullable(),
   minSize: z.number().optional().nullable(),
-  children: z.array(NonLayoutNodeSchema),
+  children: z.array(PanelChildSchema),
 });
 
 const ResizableLayoutNodeSchema = z.object({
@@ -80,30 +86,91 @@ const ResizableLayoutNodeSchema = z.object({
   panels: z.array(PanelSchema),
 });
 
-export const NodeSchema = z.discriminatedUnion("kind", [
-  TitleNodeSchema,
-  SubtitleNodeSchema,
-  TextNodeSchema,
-  BulletsNodeSchema,
-  TableNodeSchema,
-  ChartNodeSchema,
-  ResizableLayoutNodeSchema,
-]);
+export const CardNodeSchema: z.ZodTypeAny = z.lazy(() =>
+  z.object({
+    kind: z.literal("card"),
+    children: z.array(NodeSchema),
+  }),
+);
 
-export const CardNodeSchema = z.object({
-  kind: z.literal("card"),
-  children: z.array(NodeSchema),
-});
+export const NodeSchema = z.lazy(() =>
+  z.union([
+    z.discriminatedUnion("kind", [
+      TitleNodeSchema,
+      SubtitleNodeSchema,
+      TextNodeSchema,
+      BulletsNodeSchema,
+      TableNodeSchema,
+      ChartNodeSchema,
+      ResizableLayoutNodeSchema,
+    ]),
+    CardNodeSchema,
+  ]),
+);
 
-export type TitleNode = z.infer<typeof TitleNodeSchema>;
-export type SubtitleNode = z.infer<typeof SubtitleNodeSchema>;
-export type TextNode = z.infer<typeof TextNodeSchema>;
-export type BulletsNode = z.infer<typeof BulletsNodeSchema>;
-export type TableNode = z.infer<typeof TableNodeSchema>;
-export type ChartSeries = z.infer<typeof ChartSeriesSchema>;
-export type ChartNode = z.infer<typeof ChartNodeSchema>;
-export type Panel = z.infer<typeof PanelSchema>;
-export type ResizableLayoutNode = z.infer<typeof ResizableLayoutNodeSchema>;
-export type Node = z.infer<typeof NodeSchema>;
-export type CardNode = z.infer<typeof CardNodeSchema>;
+export type ChartSeries = {
+  name: string;
+  values: number[];
+};
 
+export type TitleNode = {
+  kind: "title";
+  text: string;
+};
+
+export type SubtitleNode = {
+  kind: "subtitle";
+  text: string;
+};
+
+export type TextNode = {
+  kind: "text";
+  text: string;
+};
+
+export type BulletsNode = {
+  kind: "bullets";
+  items: string[];
+};
+
+export type TableNode = {
+  kind: "table";
+  columns: string[];
+  rows: string[][];
+};
+
+export type ChartNode = {
+  kind: "chart";
+  chartType: "bar" | "line";
+  categories: string[];
+  series: ChartSeries[];
+};
+
+export type NonLayoutNode =
+  | TitleNode
+  | SubtitleNode
+  | TextNode
+  | BulletsNode
+  | TableNode
+  | ChartNode;
+
+export type PanelChildNode = NonLayoutNode | CardNode;
+
+export type Panel = {
+  defaultSize?: number | null;
+  minSize?: number | null;
+  children: PanelChildNode[];
+};
+
+export type ResizableLayoutNode = {
+  kind: "resizableLayout";
+  direction: "horizontal" | "vertical";
+  panels: Panel[];
+};
+
+export type Node = NonLayoutNode | ResizableLayoutNode | CardNode;
+
+export type CardNode = {
+  kind: "card";
+  children: Node[];
+};

@@ -111,7 +111,15 @@ Node = Annotated[
 
 
 NonLayoutNode = Annotated[
-    Union[TitleNode, SubtitleNode, TextNode, BulletsNode, TableNode, ChartNode],
+    Union[
+        TitleNode,
+        SubtitleNode,
+        TextNode,
+        BulletsNode,
+        TableNode,
+        ChartNode,
+        CardNode,
+    ],
     Field(discriminator="kind"),
 ]
 
