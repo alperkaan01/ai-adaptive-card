@@ -1,2 +1,12 @@
 # ai-adaptive-card
-Dynamic card ui element that can be editable by ai
+
+Minimal Next.js workspace focused on building an AI-editable adaptive card.
+
+## Getting started
+
+```bash
+npm install
+npm dev
+```
+
+The UI is intentionally bare so we can iterate directly on the adaptive card experience without stripping away template content first.
