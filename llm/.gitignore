@@ -1,0 +1,40 @@
+# Pixi environments
+.pixi/*
+!.pixi/config.toml
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python cache / artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dylib
+*.egg-info/
+.Python
+pip-wheel-metadata/
+
+# Build / dist
+build/
+dist/
+htmlcov/
+*.log
+
+# IDE / editor junk
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local configuration / secrets
+.env*
+.coverage
+coverage.xml
+
+# Misc
+*~
+Thumbs.db
