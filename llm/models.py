@@ -41,6 +41,7 @@ class TableNode(BaseNode):
 class ChartSeries(BaseModel):
     name: str
     values: List[float]
+    color: Optional[str] = None
 
     class Config:
         extra = "forbid"

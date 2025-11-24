@@ -56,9 +56,10 @@ chart:
 - chartType: "bar" or "line"
 - categories: array of strings (x-axis labels)
 - series: array of:
-  - { "name": string, "values": array of numbers }
+  - { "name": string, "values": array of numbers, "color": optional string (hex code or CSS color) }
 - Every series.values array MUST have the same length as categories.
 - All values elements MUST be numeric.
+- You SHOULD provide a "color" for each series to make the chart visually appealing and distinct. Use hex codes (e.g., "#3b82f6", "#ef4444").
 
 resizableLayout:
 - kind: "resizableLayout"

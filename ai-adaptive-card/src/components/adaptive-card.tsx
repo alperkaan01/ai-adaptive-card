@@ -83,27 +83,27 @@ function AdaptiveCard({ card }: AdaptiveCardProps): ReactElement {
   }, [card.children]);
 
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-lg transition-all duration-500 animate-in fade-in zoom-in-95">
       {headerNodes.length > 0 && (
-        <CardHeader className="border-b">
+        <CardHeader className="border-b pb-6">
           {headerNodes.map((node, index) => {
             if (node.kind === 'title') {
               return (
-                <CardTitle key={index} className="text-xl md:text-2xl">
+                <CardTitle key={index} className="text-2xl font-bold tracking-tight md:text-3xl">
                   {node.text}
                 </CardTitle>
               );
             }
             if (node.kind === 'subtitle') {
               return (
-                <CardDescription key={index}>{node.text}</CardDescription>
+                <CardDescription key={index} className="text-base mt-2">{node.text}</CardDescription>
               );
             }
             return null;
           })}
         </CardHeader>
       )}
-      <CardContent className="flex flex-col gap-6 py-6">
+      <CardContent className="flex flex-col gap-8 py-8">
         {bodyNodes.map((node, index) => (
           <Fragment key={index}>{renderNode(node)}</Fragment>
         ))}
@@ -176,9 +176,18 @@ function renderChart(node: ChartNode): ReactElement {
   });
 
   const config: ChartConfig = {};
-  for (const series of node.series) {
+  const defaultColors = [
+    'hsl(var(--chart-1))',
+    'hsl(var(--chart-2))',
+    'hsl(var(--chart-3))',
+    'hsl(var(--chart-4))',
+    'hsl(var(--chart-5))',
+  ];
+
+  for (const [index, series] of node.series.entries()) {
     config[series.name] = {
       label: series.name,
+      color: series.color || defaultColors[index % defaultColors.length],
     };
   }
 
@@ -195,7 +204,8 @@ function renderChart(node: ChartNode): ReactElement {
               key={series.name}
               type="monotone"
               dataKey={series.name}
-              strokeWidth={2}
+              stroke={series.color || `var(--color-${series.name})`}
+              strokeWidth={3}
               dot={false}
             />
           ))}
@@ -210,8 +220,9 @@ function renderChart(node: ChartNode): ReactElement {
             <Bar
               key={series.name}
               dataKey={series.name}
-              radius={4}
-              maxBarSize={32}
+              fill={series.color || `var(--color-${series.name})`}
+              radius={6}
+              maxBarSize={48}
             />
           ))}
         </BarChart>

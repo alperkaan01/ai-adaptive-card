@@ -29,6 +29,7 @@ const TableNodeSchema = z.object({
 const ChartSeriesSchema = z.object({
   name: z.string(),
   values: z.array(z.number()),
+  color: z.string().optional(),
 });
 
 const ChartNodeSchema = z
@@ -111,6 +112,7 @@ export const NodeSchema = z.lazy(() =>
 export type ChartSeries = {
   name: string;
   values: number[];
+  color?: string;
 };
 
 export type TitleNode = {
