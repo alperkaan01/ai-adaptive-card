@@ -47,7 +47,7 @@ export default function AdaptiveCardPlayground(): ReactElement {
         throw new Error('Received invalid card structure from API.');
       }
 
-      setCard(parsed.data);
+      setCard(parsed.data as CardNode);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : 'Unexpected error occurred.';

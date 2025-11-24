@@ -83,7 +83,7 @@ function AdaptiveCard({ card }: AdaptiveCardProps): ReactElement {
   }, [card.children]);
 
   return (
-    <Card className="w-full max-w-4xl">
+    <Card className="w-full">
       {headerNodes.length > 0 && (
         <CardHeader className="border-b">
           {headerNodes.map((node, index) => {
@@ -103,7 +103,7 @@ function AdaptiveCard({ card }: AdaptiveCardProps): ReactElement {
           })}
         </CardHeader>
       )}
-      <CardContent className="flex flex-col gap-4 py-4">
+      <CardContent className="flex flex-col gap-6 py-6">
         {bodyNodes.map((node, index) => (
           <Fragment key={index}>{renderNode(node)}</Fragment>
         ))}
@@ -230,7 +230,7 @@ function renderResizableLayout(node: ResizableLayoutNode): ReactElement {
             defaultSize={panel.defaultSize ?? undefined}
             minSize={panel.minSize ?? undefined}
           >
-            <div className="flex h-full flex-col gap-4">
+            <div className="flex h-full flex-col gap-4 p-6">
               {panel.children.map((child, childIndex) => (
                 <Fragment key={childIndex}>{renderNode(child)}</Fragment>
               ))}
