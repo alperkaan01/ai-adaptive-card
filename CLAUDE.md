@@ -33,6 +33,7 @@ A minimal workspace for building an AI-editable adaptive card system. The backen
 - **Formatting**: Use standard formatters (Prettier for JS/TS, Black/Isort for Python).
 - **Paths**: Use absolute imports where possible in frontend (`@/components/...`).
 - **Documentation**: ALWAYS update this CLAUDE.md file whenever a new major feature is introduced or significant architectural changes are made. Keep the "Current State" section up to date.
+- **Git Commits**: When a new feature is integrated, create a commit with a concise one-line commit message describing the feature.
 
 ### Frontend (Next.js)
 - **Components**: Functional components with TypeScript interfaces.
