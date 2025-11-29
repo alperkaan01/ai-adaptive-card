@@ -32,6 +32,7 @@ A minimal workspace for building an AI-editable adaptive card system. The backen
 ### General
 - **Formatting**: Use standard formatters (Prettier for JS/TS, Black/Isort for Python).
 - **Paths**: Use absolute imports where possible in frontend (`@/components/...`).
+- **Documentation**: ALWAYS update this CLAUDE.md file whenever a new major feature is introduced or significant architectural changes are made. Keep the "Current State" section up to date.
 
 ### Frontend (Next.js)
 - **Components**: Functional components with TypeScript interfaces.
@@ -48,5 +49,11 @@ A minimal workspace for building an AI-editable adaptive card system. The backen
 
 ## Current State
 - **Backend**: `POST /generate-card` endpoint works, returning a validated `CardNode` tree.
-- **Frontend**: `AdaptiveCard` component renders the JSON tree. Playground UI exists.
+- **Frontend**:
+  - `AdaptiveCard` component renders the JSON tree with full visual styling.
+  - `AdaptiveCardPlayground` provides a chat-like interface with conversation starters.
+  - Support for nested card nodes and complex layouts.
+  - Chart series color customization implemented.
+  - Shadcn UI components integrated (Button, Skeleton, Avatar, ScrollArea, Badge, Tabs, Separator, etc.).
 - **Models**: Basic nodes supported (Title, Subtitle, Text, Bullets, Table, Chart, ResizableLayout).
+- **Schemas**: TypeScript Zod schemas for type validation on the frontend.
